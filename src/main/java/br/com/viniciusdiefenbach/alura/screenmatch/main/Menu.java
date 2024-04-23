@@ -1,5 +1,6 @@
 package br.com.viniciusdiefenbach.alura.screenmatch.main;
 
+import br.com.viniciusdiefenbach.alura.screenmatch.models.EpisodesData;
 import br.com.viniciusdiefenbach.alura.screenmatch.models.SeasonsData;
 import br.com.viniciusdiefenbach.alura.screenmatch.models.SeriesData;
 import br.com.viniciusdiefenbach.alura.screenmatch.services.ApiConsume;
@@ -24,7 +25,6 @@ public class Menu {
         var serieAddress = URL_ADDRESS + serieName.replace(" ", "+");
         var json = apiConsume.getData(serieAddress + API_KEY);
         SeriesData seriesData = dataConversion.getData(json, SeriesData.class);
-        System.out.println(seriesData);
 
         List<SeasonsData> seasonsDataList = new ArrayList<>();
         for (int i = 1; i <= seriesData.totalSeasons(); i++) {
@@ -32,6 +32,6 @@ public class Menu {
             SeasonsData seasonsData = dataConversion.getData(json, SeasonsData.class);
             seasonsDataList.add(seasonsData);
         }
-        seasonsDataList.forEach(System.out::println);
+        seasonsDataList.forEach(s -> s.episodes().forEach(e -> System.out.println(e.title())));
     }
 }
